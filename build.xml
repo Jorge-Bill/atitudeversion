@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Melhor Idade" default="start">
+    <target name="start" depends="composer,update,dirs,dirsPermission,env,docker"/>
+    <target name="composer">
+        <available file="composer.phar" property="composer.exists"/>
+        <echo msg="${composer.exists}"/>
+        <if>
+            <not>
+                <isset property="composer.exists"/>
+            </not>
+            <then>
+                <php expression="file_put_contents('composer.phar',file_get_contents('https://getcomposer.org/installer'))" />
+                <exec command="php composer.phar"/>
+                <composer command="install"/>
+            </then>
+        </if>
+    </target>
+    <target name="update">
+        <echo msg="Atualizando os pacotes PHP"/>
+        <composer command="update"/>
+    </target>
+    <!--<target name="node">-->
+        <!--<echo msg="Instalando o node"/>-->
+        <!--<exec command="npm install" />-->
+    <!--</target>-->
+    <!--<target name="bower">-->
+        <!--<echo msg="Instalando o bower"/>-->
+        <!--<exec command="bower install &#45;&#45;allow-root" />-->
+    <!--</target>-->
+    <!--<target name="gulp">-->
+        <!--<echo msg="Executando a tarefa do Gulp"/>-->
+        <!--<exec command="gulp portal-scritps" dir="public/src" />-->
+    <!--</target>-->
+    <target name="dirs">
+        <mkdir dir="log" />
+        <chmod file="log" mode="0777" verbose="true" />
+    </target>
+
+    <target name="dirsPermission">
+        <echo msg="Aplicando permissão na pasta"/>
+        <chmod file="vendor" mode="0777" verbose="true" />
+    </target>
+    <target name="env">
+        <echo msg="Criando .env"/>
+        <exec command="cp .env.example .env" />
+    </target>
+    <target name="docker">
+        <echo msg="Executando a tarefa de Docker"/>
+        <exec command="docker-compose up -d --build" />
+    </target>
+</project>

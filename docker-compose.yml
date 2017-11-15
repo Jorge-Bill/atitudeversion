@@ -1,0 +1,21 @@
+version: '2'
+services:
+  melhoridade:
+    container_name: melhoridade
+    build: .
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/php/melhoridade
+  # MySQL (5.7)
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    container_name: melhoridade-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=atitudephp
+      - MYSQL_DATABASE=atitudephp
+      - MYSQL_USER=atitudephp
+      - MYSQL_PASSWORD=atitudephp

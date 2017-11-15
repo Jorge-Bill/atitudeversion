@@ -1,0 +1,8 @@
+vendor/
+.idea/
+composer.phar
+.env
+bin/
+composer.lock
+log/
+go-pear.phar
