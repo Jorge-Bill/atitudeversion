@@ -6,6 +6,7 @@ class Posts
 {
     protected $table = 'posts';
     private $pdf;
+    protected $id;
 
     public function __construct()
     {
@@ -15,6 +16,11 @@ class Posts
     public function getAllPosts($app)
     {
         return  $app['db']->fetchAll("select * from " . $this->table);
+    }
+
+    public function getPostNome($app, $id)
+    {
+        return $app['db']->fetchAll("select * from " . $this->table . " Where id =" . $this->id . " $id");
     }
 
     public function getNomePDF(string $nome)

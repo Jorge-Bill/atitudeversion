@@ -31,6 +31,19 @@ class frontController  implements ControllerProviderInterface
             return $app->json(['result' => false], 404);
         });
 
+        $controllers->get('postNome/{id}', function (Application $app, $id){
+            $db = new Posts;
+
+            $data = $db->getPostNome($app, $id);
+
+            if(count($data) > 0) {
+                return $app->json($data, 200);
+            }
+
+            return $app->json(['result' => false], 404);
+
+        });
+
         $controllers->get('gerapdf/nome/{nome}', function (Application $app, $nome) {
             $db = new Posts;
             $db->getNomePDF($nome);
